@@ -34,7 +34,10 @@ public class Main {
     }
 
     private static void delete() {
-    }
+        for( int id = 0 ;  ; id ++  ) {
+
+        if (  id = 5 ); {delete();
+    } } }
 
     private static void list() {   // sozdet i vivodit spisok
         for (Person p: personList) {

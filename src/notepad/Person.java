@@ -1,4 +1,4 @@
-package notepad_vb1;
+package notepad;
 
 
 public class Person {

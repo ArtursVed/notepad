@@ -1,4 +1,4 @@
-package notepad_vb1;
+package notepad;
 
 import java.io.ObjectInput;
 import java.util.ArrayList;
@@ -68,13 +68,22 @@ public class Main {
     private static void delete() {
 
         System.out.println("what number of ID you want to delete?"); // sprasivaem
-    int id_num = scanner.nextInt(); // scitivaem s ekrana
-        for (int id=0; id==id_num; id++) {
-
-            System.out.println(id);
+        int id = scanner.nextInt(); // scitivaem s ekrana
+        for (int i = 0; i < personList.size(); i++) {
+            Person p = personList.get(i);
+            if (id == p.getId()) {
+                personList.remove(i);
+                break;
+            }
         }
-        personList.remove(id_num);
+
     }
+//        for (int id=0; id==id_num; id++) {
+//
+//            System.out.println(id);
+//        }
+//        personList.remove(id_num);
+
 
     private static void help() {
 
@@ -135,24 +144,26 @@ public class Main {
     private static void create() {
 
         System.out.println("what is your name"); // sprasivaem
-        String name = scanner.next(); // scitivaem s ekrana
+        String name = askString(); // scitivaem s ekrana
         System.out.println("what is your surname");
 
-        String surname = scanner.next();
+        String surname = askString();
 
 
         System.out.println("what is your phone");
 
-        String phone = scanner.next();
+        String phone = askString();
 
-        if (phone.length()<5)
+        while (phone.length()<5)
         {System.out.println("The number must consist 5 digits");
-            return;
+        System.out.println("what is your phone");
+        phone = askString();
+
         }
 
         System.out.println("what is your email");
 
-        String email = scanner.next();
+        String email = askString();
 
 
         Person p = new Person();  // sozdaem novuju personu , ekzempljar klassa person
@@ -168,6 +179,28 @@ public class Main {
 
         personList.add(p);  // sohranjaem v spiske person
         System.out.println(p);  // vivodim na ekran
+    }
+
+    // imja i familja s probelami v kavickah
+
+    private static String askString() {
+        var result = new ArrayList<String>();
+        var word = scanner.next();
+        if (word.startsWith("\"")) {
+
+            do {
+                result.add(word);
+                if (word.endsWith("\"")) {
+                    String str = String.join(" ", result);  // ubrat kovicki
+                    return str.substring(1,str.length()-1);
+                }
+                word = scanner.next();
+            } while(true);
+
+        } else {
+            return word;
+
+        }
     }
 
 }

@@ -1,11 +1,10 @@
 package notepad;
 
+//klass person soderzin dannie klassa record
 
-public class Person {
+public class Person extends Record {
 
-    private static int count = 0;
 
-    private int id;  // private --prjacet peremennie klassa
     private String name;
 
     private String surname;
@@ -20,24 +19,9 @@ public class Person {
 
     private String Delete;
 
-    int id_num;
 
 
 
-    public Person() {
-
-        count ++;
-
-        id = count;
-
-    }
-
-
-    public int getId() {
-
-        return id;
-
-    }
 
 
     public String getName() {
@@ -93,7 +77,7 @@ public class Person {
     @Override   // konvertacija objecta v stroku
     public String toString() {
         return "Person{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
@@ -102,4 +86,12 @@ public class Person {
     }
 
 
+    @Override
+    public boolean hasSubstring(String str) {
+        return name.contains(str)
+                ||surname.contains(str)
+                ||phone.contains(str)
+                ||email.contains(str);
+
+    }
 }

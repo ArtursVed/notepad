@@ -1,11 +1,9 @@
 package notepad;
 
-import java.io.ObjectInput;
 import java.util.ArrayList;
 
 import java.util.List;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -14,7 +12,7 @@ public class Main {
 
     static Scanner scanner = new Scanner (System.in);
 
-    static List<Person> personList = new ArrayList<>();  // sozdaet list - spisok
+    static List<Record> recordList = new ArrayList<>();  // sozdaet list - spisok
     public static void main(String[] args) {
 
 
@@ -33,9 +31,20 @@ public class Main {
 
                     break;
 
+                case "find":
+                    find();
+
+                    break;
+
+
                 case "help":
 
                     help();
+
+                    break;
+
+                case "note_text":
+                    note_text();
 
                     break;
 
@@ -65,14 +74,41 @@ public class Main {
 
     }
 
+    private static void find() {
+
+        System.out.println("Find what?");
+        String str = askString();
+        for (Record r : recordList) {
+            if (r.hasSubstring(str)) {
+                System.out.println(r);
+            }
+        }
+    }
+
+    private static void note_text() {
+
+        System.out.println("Enter text"); // sprasivaem
+
+        String note_text = askString(); // scitivaem s ekrana
+
+        Note p1 = new Note();  // sozdaem novuju personu , ekzempljar klassa person
+        p1.setNote_text(note_text);   // zapisivaem imja , familiju, telefon v Person
+
+
+
+        recordList.add(p1);  // sohranjaem v spiske person
+        System.out.println(p1);  // vivodim na ekran
+    }
+
+
     private static void delete() {
 
         System.out.println("what number of ID you want to delete?"); // sprasivaem
         int id = scanner.nextInt(); // scitivaem s ekrana
-        for (int i = 0; i < personList.size(); i++) {
-            Person p = personList.get(i);
+        for (int i = 0; i < recordList.size(); i++) {
+            Record p = recordList.get(i);
             if (id == p.getId()) {
-                personList.remove(i);
+                recordList.remove(i);
                 break;
             }
         }
@@ -82,7 +118,7 @@ public class Main {
 //
 //            System.out.println(id);
 //        }
-//        personList.remove(id_num);
+//        recordList.remove(id_num);
 
 
     private static void help() {
@@ -129,7 +165,7 @@ public class Main {
 
     private static void list() {   // sozdet i vivodit spisok ,
         // pri vivode na ekran avtomaticeski vizivaetsja metod toString
-        for (Person p: personList) {
+        for (Record p: recordList) {
 
             System.out.println(p);
 
@@ -177,7 +213,7 @@ public class Main {
 
 
 
-        personList.add(p);  // sohranjaem v spiske person
+        recordList.add(p);  // sohranjaem v spiske person
         System.out.println(p);  // vivodim na ekran
     }
 

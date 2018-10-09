@@ -1,5 +1,8 @@
 package notepad;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -10,6 +13,13 @@ import java.util.Scanner;
 
 public class Main {
 
+    public final static String DATE_FORMAT = "dd.MM.yyyy";// constanta ( public final static)
+    public final static DateTimeFormatter DATE_FORMATER = DateTimeFormatter.ofPattern(DATE_FORMAT);
+
+    public final static String TIME_FORMAT = "HH:mm:ss";
+    public final static DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
+
+
     static Scanner scanner = new Scanner (System.in);
 
     static List<Record> recordList = new ArrayList<>();  // sozdaet list - spisok
@@ -19,7 +29,7 @@ public class Main {
 
         while (true) {
 
-            System.out.println ("Enter command");
+            System.out.println ("Enter command ('help'for help):");
 
             String cmd = scanner.next();
 
@@ -80,30 +90,14 @@ public class Main {
 
     }
 
-    private static void reminder() {
-        System.out.println("Enter date"); // sprasivaem
-        String rdate = askString();// scitivaem s ekrana
+    public static void reminder() {
 
-        System.out.println("Enter time");
-        String rtime = askString();
-
-        System.out.println("Enter text"); // sprasivaem
-        String note_text = askString(); // scitivaem s ekrana
-
-        Reminder datetime = new Reminder();
-
-        datetime.setDate(rdate);
-        datetime.setTime(rtime);
-        datetime.setNote_text(note_text);
-
-        recordList.add(datetime);  // sohranjaem v spiske person
-        System.out.println(datetime);  // vivodim na ekran
+        Reminder datetime = new Reminder(); //sozdaetsja reminder
+        addRecord(datetime);
 
     }
 
-    
-    
-    
+
     private static void find() {
 
         System.out.println("Find what?");
@@ -115,17 +109,14 @@ public class Main {
         }
     }
 
-    private static void note_text() {
-
-        System.out.println("Enter text"); // sprasivaem
-
-        String note_text = askString(); // scitivaem s ekrana
+    public static void note_text() {
 
         Note p1 = new Note();  // sozdaem novuju personu , ekzempljar klassa person
-        p1.setNote_text(note_text);   // zapisivaem imja , familiju, telefon v Person
+        addRecord(p1);
+    }
 
-
-
+    private static void addRecord(Note p1) {
+        p1.askQuestion();   // zapisivaem imja , familiju, telefon v Person
         recordList.add(p1);  // sohranjaem v spiske person
         System.out.println(p1);  // vivodim na ekran
     }
@@ -144,84 +135,43 @@ public class Main {
         }
 
     }
-//        for (int id=0; id==id_num; id++) {
-//
-//            System.out.println(id);
-//        }
-//        recordList.remove(id_num);
 
    private static void help() {
 
         System.out.println("create:  " +   "enter new users" );
         System.out.println("help:  " + "about all commands" );
         System.out.println("List:  " + "output of all users" );
-        System.out.println("Delet:  " + "input number of ID to delete" );
+        System.out.println("Delete:  " + "input number of ID to delete" );
         System.out.println("Exit:  " + "end the programm" );
-        System.out.println("nText :  " + "input TEXT" );
+        System.out.println("note_text :  " + "input TEXT" );
         System.out.println("reminder :  " + "input date/time" );
     }
-
-
-
-
 
     private static void list() {   // sozdet i vivodit spisok ,
         // pri vivode na ekran avtomaticeski vizivaetsja metod toString
         for (Record p: recordList) {
-
             System.out.println(p);
-
         }
-
-
-
     }
 
 
-
-    private static void create() {
-
-        System.out.println("what is your name"); // sprasivaem
-        String name = askString(); // scitivaem s ekrana
-        System.out.println("what is your surname");
-
-        String surname = askString();
-
-
-        System.out.println("what is your phone");
-
-        String phone = askString();
-
-        while (phone.length()<5)
-        {System.out.println("The number must consist 5 digits");
-        System.out.println("what is your phone");
-        phone = askString();
-
-        }
-
-        System.out.println("what is your email");
-
-        String email = askString();
-
+    public static void create() {
 
         Person p = new Person();  // sozdaem novuju personu , ekzempljar klassa person
-        p.setName(name);   // zapisivaem imja , familiju, telefon v Person
-        p.setSurname(surname);
+        addRecord((Record) p);
+    }
 
-        p.setPhone(phone);
+    private static void addRecord(Record p) {
+        p.askQuestion();   // zapisivaem imja , familiju, telefon v Person
 
-        p.setEmail(email);
-
-
-
-
+        System.out.println("person");
         recordList.add(p);  // sohranjaem v spiske person
         System.out.println(p);  // vivodim na ekran
     }
 
-    // imja i familja s probelami v kavickah
 
-    private static String askString() {
+
+    public static String askString() {
         var result = new ArrayList<String>();
         var word = scanner.next();
         if (word.startsWith("\"")) {
@@ -241,4 +191,16 @@ public class Main {
         }
     }
 
+    public static LocalDate askDate() {
+        String d = askString();   // zaprasivaem datu
+        LocalDate date =LocalDate.parse(d,DATE_FORMATER);
+        return date;
+
+    }
+
+    public static LocalTime askTime() {
+        String t = askString();
+        LocalTime time =LocalTime.parse(t,TIME_FORMATTER);
+        return time;
+    }
 }

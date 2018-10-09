@@ -26,5 +26,13 @@ public class Note extends Record {
         return note_text.contains(str);
 
     }
+
+    @Override
+    public void askQuestion() {
+        System.out.println("Enter text"); // sprasivaem
+
+         note_text = Main.askString(); // scitivaem s ekrana
+
+    }
 }
 

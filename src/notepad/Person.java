@@ -94,4 +94,29 @@ public class Person extends Record {
                 ||email.contains(str);
 
     }
+
+    @Override
+    public void askQuestion() {
+        System.out.println("what is your name"); // sprasivaem
+       name = Main.askString(); // scitivaem s ekrana
+        System.out.println("what is your surname");
+
+         surname = Main.askString();
+
+
+        System.out.println("what is your phone");
+
+      phone = Main.askString();
+
+        while (phone.length()<5)
+        {System.out.println("The number must consist 5 digits");
+            System.out.println("what is your phone");
+            phone = Main.askString();
+
+        }
+
+        System.out.println("what is your email");
+
+        email = Main.askString();
+    }
 }

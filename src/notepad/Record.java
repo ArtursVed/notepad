@@ -15,5 +15,8 @@ public abstract class Record {
 
     public abstract boolean hasSubstring(String str);
 
+    public abstract void askQuestion();
+
+
     public int getId() { return id; }
 }

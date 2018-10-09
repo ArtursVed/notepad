@@ -35,6 +35,12 @@ public class Main {
                     find();
 
                     break;
+                    
+                case "reminder":
+
+                    reminder();
+
+                    break;
 
 
                 case "help":
@@ -74,6 +80,27 @@ public class Main {
 
     }
 
+    private static void reminder() {
+        System.out.println("Enter date"); // sprasivaem
+        String rdate = askString();// scitivaem s ekrana
+
+        System.out.println("Enter time");
+        String rtime = askString();
+
+        Reminder datetime = new Reminder();
+
+        datetime.setDate(rdate);
+        datetime.setTime(rtime);
+
+
+        recordList.add(datetime);  // sohranjaem v spiske person
+        System.out.println(datetime);  // vivodim na ekran
+
+    }
+
+    
+    
+    
     private static void find() {
 
         System.out.println("Find what?");
@@ -120,43 +147,15 @@ public class Main {
 //        }
 //        recordList.remove(id_num);
 
+   private static void help() {
 
-    private static void help() {
-
-        System.out.println("Enter a question command");
-
-        String cmd = scanner.next();
-
-        switch (cmd) {
-
-            case "create":
-
-                System.out.println("enter new users");
-
-                break;
-
-            case "help":
-
-                System.out.println("about all commands");
-
-                break;
-
-            case "List":
-
-                System.out.println("output of all users");
-
-                break;
-
-            case "Delete":
-
-                System.out.println("input number of ID to delete");
-
-                break;
-
-            case "exit":
-
-                System.out.println("end the programm");
-        }
+        System.out.println("create:  " +   "enter new users" );
+        System.out.println("help:  " + "about all commands" );
+        System.out.println("List:  " + "output of all users" );
+        System.out.println("Delet:  " + "input number of ID to delete" );
+        System.out.println("Exit:  " + "end the programm" );
+        System.out.println("nText :  " + "input TEXT" );
+        System.out.println("reminder :  " + "input date/time" );
     }
 
 

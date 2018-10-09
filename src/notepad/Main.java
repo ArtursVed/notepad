@@ -87,11 +87,14 @@ public class Main {
         System.out.println("Enter time");
         String rtime = askString();
 
+        System.out.println("Enter text"); // sprasivaem
+        String note_text = askString(); // scitivaem s ekrana
+
         Reminder datetime = new Reminder();
 
         datetime.setDate(rdate);
         datetime.setTime(rtime);
-
+        datetime.setNote_text(note_text);
 
         recordList.add(datetime);  // sohranjaem v spiske person
         System.out.println(datetime);  // vivodim na ekran

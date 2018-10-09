@@ -30,6 +30,7 @@ public class Reminder extends Note {
     public String toString() {
         return "Reminder{" +
                 "id=" + getId() + '\'' +
+                "note_text='" + getNote_text() + '\'' +
                 "date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 '}';

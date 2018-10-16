@@ -2,7 +2,7 @@ package notepad;
 
 import java.time.LocalTime;
 
-public class Alarm extends Note {
+public class Alarm extends Note implements Expirable {
 
 
     private LocalTime time;
@@ -55,4 +55,10 @@ public class Alarm extends Note {
     }
 
 
+    @Override
+    public boolean isExpired() {
+        LocalTime now = LocalTime.now();
+
+        return now.isAfter(time); // budet zvonit do opredelennogo vremeni , budilnik na opredelnnoe vremja
+    }
 }

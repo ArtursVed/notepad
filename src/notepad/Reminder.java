@@ -1,16 +1,15 @@
 package notepad;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
-public class Reminder extends Alarm {
-
+public class Reminder extends Alarm implements Expirable {
 
 
     private LocalDate date;
   
-
-
 
     public LocalDate getDate() {
         return date;
@@ -20,11 +19,12 @@ public class Reminder extends Alarm {
         this.date = date;
     }
 
+
     @Override
     public String toString() {
         return "Reminder{" +
                 "id=" + getId() + '\'' +
-                "time='" + getTime() + '\'' +
+               "time='" + getTime() + '\'' +
                 "date='" + date.format(Main.DATE_FORMATER) + '\'' +   // mozno otformatirovat po svoim dannim
               
                 '}';
@@ -35,7 +35,7 @@ public class Reminder extends Alarm {
     public boolean hasSubstring(String str) {
         return super.hasSubstring(str)
         ||  date.format(Main.DATE_FORMATER).contains(str);
-    
+
 
 
     }
@@ -49,5 +49,15 @@ public class Reminder extends Alarm {
 
     }
 
+
+    @Override
+    public boolean isExpired() {
+        LocalTime time = getTime();
+        // LocalDate date = getDate();
+        LocalDateTime timedate = LocalDateTime.of(date,time);
+        LocalDateTime now = LocalDateTime.now();
+
+        return now.isAfter(timedate);
+    }
 }
 

@@ -3,12 +3,7 @@ package notepad;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
-import java.util.List;
-
-import java.util.Scanner;
-
+import java.util.*;
 
 
 public class Main {
@@ -20,20 +15,22 @@ public class Main {
     public final static DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
 
-    static Scanner scanner = new Scanner (System.in);
+    static Scanner scanner = new Scanner(System.in);
 
-    static List<Record> recordList = new ArrayList<>();  // sozdaet list - spisok
+    // static List<Record> recordList = new ArrayList<>();  // sozdaet list - spisok
+
+    private static Map<Integer, Record> recordList = new LinkedHashMap<>();
+
     public static void main(String[] args) {
-
 
 
         while (true) {
 
-            System.out.println ("Enter command ('help'for help):");
+            System.out.println("Enter command ('help'for help):");
 
             String cmd = scanner.next();
 
-            switch (cmd){
+            switch (cmd) {
 
                 case "create":
 
@@ -45,7 +42,7 @@ public class Main {
                     find();
 
                     break;
-                    
+
                 case "reminder":
 
                     reminder();
@@ -68,6 +65,17 @@ public class Main {
                     note_text();
 
                     break;
+
+                case "show":
+                    show();
+                    break;
+
+                case "expired":
+
+                    showExpired();
+
+                    break;
+
 
                 case "Delete":
 
@@ -92,6 +100,30 @@ public class Main {
         }
 
 
+    }
+
+    private static void showExpired() {
+        for (Record r : recordList.values()) {
+            if (r instanceof Expirable) {
+                Expirable e = (Expirable) r;
+
+                if (e.isExpired()) {
+                    System.out.println(r);
+                }
+            }
+        }
+    }
+
+    private static void show() {
+
+        System.out.println("what number of ID you want to see ?"); // sprasivaem
+
+        int id = scanner.nextInt(); // scitivaem s ekrana
+
+        Record p = recordList.get(id);
+
+        System.out.println(p);
+
 
     }
 
@@ -113,7 +145,7 @@ public class Main {
 
         System.out.println("Find what?");
         String str = askString();
-        for (Record r : recordList) {
+        for (Record r : recordList.values()) {
             if (r.hasSubstring(str)) {
                 System.out.println(r);
             }
@@ -128,7 +160,7 @@ public class Main {
 
     private static void addRecord(Note p1) {
         p1.askQuestion();   // zapisivaem imja , familiju, telefon v Person
-        recordList.add(p1);  // sohranjaem v spiske person
+        recordList.put(p1.getId(), p1);  // sohranjaem v spiske person
         System.out.println(p1);  // vivodim na ekran
     }
 
@@ -147,21 +179,22 @@ public class Main {
 
     }
 
-   private static void help() {
+    private static void help() {
 
-        System.out.println("create:  " +   "enter new users" );
-        System.out.println("help:  " + "about all commands" );
-        System.out.println("List:  " + "output of all users" );
-        System.out.println("Delete:  " + "input number of ID to delete" );
-        System.out.println("Exit:  " + "end the programm" );
-        System.out.println("note_text :  " + "input TEXT" );
-        System.out.println("reminder :  " + "input date/time" );
-       System.out.println("alarm :  " + "input time" );
+        System.out.println("create:  " + "enter new users");
+        System.out.println("help:  " + "about all commands");
+        System.out.println("List:  " + "output of all users");
+        System.out.println("Delete:  " + "input number of ID to delete");
+        System.out.println("Exit:  " + "end the programm");
+        System.out.println("note_text :  " + "input TEXT");
+        System.out.println("reminder :  " + "input date/time");
+        System.out.println("alarm :  " + "input time");
+        System.out.println("show :  " + "input id - what you want to see");
     }
 
     private static void list() {   // sozdet i vivodit spisok ,
         // pri vivode na ekran avtomaticeski vizivaetsja metod toString
-        for (Record p: recordList) {
+        for (Record p : recordList.values()) {
             System.out.println(p);
         }
     }
@@ -177,10 +210,9 @@ public class Main {
         p.askQuestion();   // zapisivaem imja , familiju, telefon v Person
 
         System.out.println("person");
-        recordList.add(p);  // sohranjaem v spiske person
+        recordList.put(p.getId(), p);  // sohranjaem v spiske person
         System.out.println(p);  // vivodim na ekran
     }
-
 
 
     public static String askString() {
@@ -192,10 +224,10 @@ public class Main {
                 result.add(word);
                 if (word.endsWith("\"")) {
                     String str = String.join(" ", result);  // ubrat kovicki
-                    return str.substring(1,str.length()-1);
+                    return str.substring(1, str.length() - 1);
                 }
                 word = scanner.next();
-            } while(true);
+            } while (true);
 
         } else {
             return word;
@@ -205,14 +237,14 @@ public class Main {
 
     public static LocalDate askDate() {
         String d = askString();   // zaprasivaem datu
-        LocalDate date =LocalDate.parse(d,DATE_FORMATER);
+        LocalDate date = LocalDate.parse(d, DATE_FORMATER);
         return date;
 
     }
 
     public static LocalTime askTime() {
         String t = askString();
-        LocalTime time =LocalTime.parse(t,TIME_FORMATTER);
+        LocalTime time = LocalTime.parse(t, TIME_FORMATTER);
         return time;
     }
 }

@@ -34,7 +34,7 @@ public class Reminder extends Alarm {
     //poisk
     public boolean hasSubstring(String str) {
         return super.hasSubstring(str)
-        ||  date.format(Main.DATE_FORMATER).contains(str)
+        ||  date.format(Main.DATE_FORMATER).contains(str);
     
 
 

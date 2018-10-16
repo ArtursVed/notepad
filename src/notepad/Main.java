@@ -51,6 +51,11 @@ public class Main {
                     reminder();
 
                     break;
+                case "Alarm":
+
+                    alarm();
+
+                    break;
 
 
                 case "help":
@@ -88,6 +93,12 @@ public class Main {
 
 
 
+    }
+
+    private static void alarm() {
+
+        Alarm alarmtime = new Alarm();
+        addRecord(alarmtime);
     }
 
     public static void reminder() {
@@ -145,6 +156,7 @@ public class Main {
         System.out.println("Exit:  " + "end the programm" );
         System.out.println("note_text :  " + "input TEXT" );
         System.out.println("reminder :  " + "input date/time" );
+       System.out.println("alarm :  " + "input time" );
     }
 
     private static void list() {   // sozdet i vivodit spisok ,
